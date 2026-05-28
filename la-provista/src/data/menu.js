@@ -29,7 +29,7 @@ export const categories = [
     image: empanadaBannerImg,
     items: [
       { id: 1, name: 'Carne Criolla', description: 'Cocción a la perfección lentamente de un estofado de carne molida con vegetales y especias terminada con huevo duro.', price: 17000 },
-      { id: 2, name: 'Pollo', description: 'La de pollo y cremoso nuestro cheddar fundido, sale con lactonesa de ajo y un toque de criolla.', price: 20000 },
+      { id: 2, name: 'Pollo', description: 'La de pollo y cremoso nuestro cheddar fundido, sale con lactonesa de ajo y un toque de criolla.', price: 300000 },
       { id: 3, name: 'Huevo', description: 'Se acompaña con nuestro picante casero y limón.', price: 17000 },
       { id: 4, name: 'Jamón & Queso', description: 'Bien clásica.', price: 17000 },
       { id: 5, name: "Pastel Mandi'o", description: 'Relleno de vacío desmechado y queso Paraguay.', price: 17000 },
