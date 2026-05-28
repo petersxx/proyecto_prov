@@ -9,7 +9,7 @@ export const categories = [
       { id: 1, name: 'Carne Criolla', description: 'Cocción a la perfección lentamente de un estofado de carne molida con vegetales y especias terminada con huevo duro.', price: 17000 },
       { id: 2, name: 'Pollo', description: 'La de pollo y cremoso nuestro cheddar fundido, sale con lactonesa de ajo y un toque de criolla.', price: 17000 },
       { id: 3, name: 'Huevo', description: 'Se acompaña con nuestro picante casero y limón.', price: 17000 },
-      { id: 4, name: 'Jamón & Queso', description: 'Bien clásica.', price: 18000 },
+      { id: 4, name: 'Jamón & Queso', description: 'Bien clásica.', price: 17000 },
       { id: 5, name: "Pastel Mandi'o", description: 'Relleno de vacío desmechado y queso Paraguay.', price: 17000 },
       { id: 6, name: 'Surubí', description: 'Crocante por fuera y cremosa por dentro, va con limón y nuestro picante casero.', price: 26000 },
       { id: 7, name: 'La de Camarón', description: 'Camarón, cebollita de verdeo y bechamel.', price: 28000 },
