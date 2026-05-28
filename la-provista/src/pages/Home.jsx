@@ -37,6 +37,7 @@ export default function Home() {
           <p className="hero-tagline">Asunción, Paraguay</p>
           <h1>La Provista</h1>
           <p className="hero-sub">Sabores que te hacen volver</p>
+          <p className="hero-sub">QUIERO PITO</p>
           <div className="hero-actions">
             <Link to="/menu" className="btn-primary">Ver menú</Link>
             <Link to="/reservas" className="btn-outline-white">Reservas</Link>
