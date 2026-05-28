@@ -1,0 +1,110 @@
+.about-page {
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+.about-header {
+  background: var(--accent-light);
+  text-align: center;
+  padding: 6rem 1.5rem 5rem;
+}
+
+.about-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.about-header h1 {
+  font-size: clamp(3rem, 6vw, 5.5rem);
+}
+
+.about-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 5rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.about-text h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.about-text p {
+  font-size: 0.95rem;
+  color: var(--gray-dark);
+  line-height: 1.85;
+  margin-bottom: 1rem;
+}
+
+.about-values {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-top: 0.5rem;
+}
+
+.value-item {
+  border-left: 2px solid var(--accent);
+  padding-left: 1.25rem;
+}
+
+.value-item h4 {
+  font-size: 1rem;
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 0.4rem;
+}
+
+.value-item p {
+  font-size: 0.875rem;
+  color: var(--gray-dark);
+  line-height: 1.6;
+}
+
+/* Fotos del espacio */
+.about-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  max-height: 520px;
+  overflow: hidden;
+}
+
+.about-photo-item {
+  overflow: hidden;
+}
+
+.about-photo-item img {
+  width: 100%;
+  height: 520px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.about-photo-item:hover img {
+  transform: scale(1.04);
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    grid-template-columns: 1fr;
+    padding: 3rem 1.5rem;
+    gap: 3rem;
+  }
+
+  .about-photos {
+    grid-template-columns: 1fr;
+    max-height: unset;
+  }
+
+  .about-photo-item img {
+    height: 260px;
+  }
+}

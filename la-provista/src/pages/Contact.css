@@ -1,0 +1,84 @@
+.contact-page {
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+.contact-header {
+  background: var(--black);
+  color: var(--white);
+  text-align: center;
+  padding: 5.5rem 1.5rem 4.5rem;
+}
+
+.contact-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.contact-header h1 {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  color: var(--white);
+}
+
+.contact-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 500px;
+}
+
+.contact-info {
+  padding: 4rem 4rem 4rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+.contact-block h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.contact-block p {
+  font-size: 0.95rem;
+  color: var(--gray-dark);
+  line-height: 1.8;
+}
+
+.contact-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--accent);
+  transition: opacity 0.2s;
+}
+
+.contact-link:hover {
+  opacity: 0.75;
+}
+
+.contact-map {
+  background: var(--gray-light);
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .contact-body {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-info {
+    padding: 3rem 1.5rem;
+  }
+
+  .map-placeholder {
+    min-height: 260px;
+  }
+}
