@@ -7,13 +7,13 @@ function formatPrice(price) {
   return `₲ ${price.toLocaleString('es-PY')}`
 }
 
-function MenuCard({ item, onClick }) {
+function MenuCard({ item, onClick, hideHint }) {
   return (
     <div className="menu-card" onClick={() => onClick(item)}>
       <div className="menu-card-info">
         <h3>{item.name}</h3>
         {item.description && <p>{item.description}</p>}
-        <span className="menu-card-hint">Haz clic para ver más</span>
+        {!hideHint && <span className="menu-card-hint">Haz clic para ver más</span>}
       </div>
       {item.priceRaya ? (
         <span className="menu-card-price dual">
@@ -67,7 +67,7 @@ export default function Menu() {
         {/* Platos */}
         <section className="menu-items">
           {current.image && (
-            <div className="menu-cat-image-wrap">
+            <div className="menu-cat-image-wrap" data-cat={current.id}>
               <img src={current.image} alt={current.label} className="menu-cat-image" />
             </div>
           )}
@@ -87,7 +87,7 @@ export default function Menu() {
           ) : (
             <div className="menu-grid">
               {current.items.map(item => (
-                <MenuCard key={item.id} item={item} onClick={setSelected} />
+                <MenuCard key={item.id} item={item} onClick={setSelected} hideHint={current.id === 'empanadas'} />
               ))}
             </div>
           )}

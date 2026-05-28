@@ -1,10 +1,32 @@
+import empanadaBannerImg from '../assets/empanadas-banner.png'
+import ensaladasBannerImg from '../assets/ensaladas-banner.png'
+import ensaladaCapresseImg from '../assets/ensalada-capresse.jpg'
+import ensaladaCaesarImg from '../assets/ensalada-caesar.jpg'
+import tostonAtunImg from '../assets/toston-atun.jpg'
+import tostonCapresseImg from '../assets/toston-capresse.jpg'
+import tostonCampoImg from '../assets/toston-campo.jpg'
+import ensaladaPulmonImg from '../assets/ensalada-pulmon.jpg'
+import ensaladaContrastesImg from '../assets/ensalada-contrastes.jpg'
+import burgersBannerImg from '../assets/burgers-banner.png'
+import pastasBannerImg from '../assets/pastas-banner.png'
+import tostonesBannerImg from '../assets/tostones-banner.png'
+import principalesBannerImg from '../assets/principales-banner.png'
+import sandwichesBannerImg from '../assets/sandwiches-banner.png'
+import piqueosBannerImg from '../assets/piqueos-banner.png'
+import hummusFalafelImg from '../assets/hummus-falafel.png'
+import hummusItemImg from '../assets/hummus-item.jpg'
 import milaImg from '../assets/milas.png'
 import marineraImg from '../assets/marinera.jpg'
+import milaNapolitanaImg from '../assets/mila-napolitana.jpg'
+import asadoImg from '../assets/asado.jpg'
+import cheesecakeImg from '../assets/cheesecake.jpg'
+import postresBannerImg from '../assets/postres-banner.png'
 
 export const categories = [
   {
     id: 'empanadas',
     label: 'Empanadas',
+    image: empanadaBannerImg,
     items: [
       { id: 1, name: 'Carne Criolla', description: 'Cocción a la perfección lentamente de un estofado de carne molida con vegetales y especias terminada con huevo duro.', price: 17000 },
       { id: 2, name: 'Pollo', description: 'La de pollo y cremoso nuestro cheddar fundido, sale con lactonesa de ajo y un toque de criolla.', price: 17000 },
@@ -21,6 +43,7 @@ export const categories = [
   {
     id: 'piqueos',
     label: 'Piqueos',
+    image: piqueosBannerImg,
     items: [
       { id: 11, name: 'Sopa Paraguaya', description: 'Es nuestra, es típica, es crocante y deliciosamente untuosa por dentro, pedila con crema fina de ajo para acompañar.', price: 39000 },
       { id: 12, name: 'Chipa Guazú', description: 'Nuestra receta de tradición paraguaya de choclo fresco con queso en su punto, crocantita por fuera y cremosa por dentro.', price: 39000 },
@@ -36,32 +59,36 @@ export const categories = [
   {
     id: 'piqueos-frescos',
     label: 'Piqueos Frescos',
+    image: hummusFalafelImg,
     items: [
-      { id: 20, name: 'Hummus, Tabuleh y Falafel', description: 'Untuoso y sedoso puré de garbanzo saborizado de la mejor manera acompañado de ensalada de tabuleh y croquetas de falafel con nuestra salsa de ajo, los acompaña pan pita de la casa.', price: 70000 },
+      { id: 20, name: 'Hummus, Tabuleh y Falafel', description: 'Untuoso y sedoso puré de garbanzo saborizado de la mejor manera acompañado de ensalada de tabuleh y croquetas de falafel con nuestra salsa de ajo, los acompaña pan pita de la casa.', price: 70000, image: hummusItemImg },
     ],
   },
   {
     id: 'ensaladas',
     label: 'Ensaladas',
+    image: ensaladasBannerImg,
     items: [
-      { id: 21, name: 'Capresse', description: 'Clásica receta italiana con variedad de tomates, aguacate, hojas de rúcula, frutos secos, pesto y balsámico con remolacha.', price: 82000 },
-      { id: 22, name: 'De Contrastes', description: 'Buquet de rúcula con peras caramelizadas, queso roquefort, almendras al fuego, arándanos y vinagreta de menta y miel.', price: 89000 },
-      { id: 23, name: 'Pulmón', description: 'Mezclum de verdes, dados de queso Paraguay, choclo, nibs de panceta, cherrys en miel de caña, huevo mollet, crutones de mandioca y cebolla crispy aderezada con lactochimi. Carne o pollo a elección.', price: 87000 },
-      { id: 24, name: 'Caesar', description: 'Lechuga repollada, bacon, queso parmesano, crotones, aderezo caesar.', price: 80000 },
+      { id: 21, name: 'Capresse', description: 'Clásica receta italiana con variedad de tomates, aguacate, hojas de rúcula, frutos secos, pesto y balsámico con remolacha.', price: 82000, image: ensaladaCapresseImg },
+      { id: 22, name: 'De Contrastes', description: 'Buquet de rúcula con peras caramelizadas, queso roquefort, almendras al fuego, arándanos y vinagreta de menta y miel.', price: 89000, image: ensaladaContrastesImg },
+      { id: 23, name: 'Pulmón', description: 'Mezclum de verdes, dados de queso Paraguay, choclo, nibs de panceta, cherrys en miel de caña, huevo mollet, crutones de mandioca y cebolla crispy aderezada con lactochimi. Carne o pollo a elección.', price: 87000, image: ensaladaPulmonImg },
+      { id: 24, name: 'Caesar', description: 'Lechuga repollada, bacon, queso parmesano, crotones, aderezo caesar.', price: 80000, image: ensaladaCaesarImg },
     ],
   },
   {
     id: 'tostones',
     label: 'Tostones',
+    image: tostonesBannerImg,
     items: [
-      { id: 25, name: 'De Campo', description: 'Tostada de pan de campo, queso crema, aguacate, bacon, tomates asados, huevo a la plancha.', price: 60000 },
-      { id: 26, name: 'Capresse', description: 'Láminas de tomate, mozzarella fresca y aguacate, terminado con reducción de balsámico, pesto y cherries asados.', price: 60000 },
-      { id: 27, name: 'De Atún', description: 'Con ensalada fresca de atún con zanahoria, cebolla roja, mayonesa, limón y aceite de sésamo coronado con huevos duros de codorniz.', price: 60000 },
+      { id: 25, name: 'De Campo', description: 'Tostada de pan de campo, queso crema, aguacate, bacon, tomates asados, huevo a la plancha.', price: 60000, image: tostonCampoImg },
+      { id: 26, name: 'Capresse', description: 'Láminas de tomate, mozzarella fresca y aguacate, terminado con reducción de balsámico, pesto y cherries asados.', price: 60000, image: tostonCapresseImg },
+      { id: 27, name: 'De Atún', description: 'Con ensalada fresca de atún con zanahoria, cebolla roja, mayonesa, limón y aceite de sésamo coronado con huevos duros de codorniz.', price: 60000, image: tostonAtunImg },
     ],
   },
   {
     id: 'sandwiches',
     label: 'Sándwiches',
+    image: sandwichesBannerImg,
     items: [
       { id: 28, name: 'Club Sándwich', description: 'Pan de miga, pechuga de pollo, panceta, mayo, mostaza y ketchup (salsa golf), lechuga, tomate, huevo a la plancha, jamón de pavo, jamón cocido y fetas de queso.', price: 75000 },
       { id: 29, name: 'Pollo Crispy', description: 'Pollo crispy en pan brioche con semillas, mayo especial, queso cheddar, tomate, lechuga repollada.', price: 82000 },
@@ -71,6 +98,7 @@ export const categories = [
   {
     id: 'burgers',
     label: 'Burgers',
+    image: burgersBannerImg,
     items: [
       { id: 31, name: 'Burger Provista', description: 'Blend de carne en semillas, mayonesa, queso azul, rúcula, cebolla caramelizada y tomate.', price: 85000 },
       { id: 32, name: 'Bacon Cheese Double Smash', description: 'Doble burger smash en pan brioche con semillas, bacon, queso cheddar, ketchup, mostaza, cebolla, pepinillos.', price: 82000 },
@@ -80,11 +108,12 @@ export const categories = [
   {
     id: 'principales',
     label: 'Platos Principales',
+    image: principalesBannerImg,
     items: [
       { id: 34, name: 'Bife Koygua', description: 'Nuestra versión con bife de lomito de 200 gramos dorado a la chapa sobre papines fritos en salsa de cebolla, locote y tomate, terminado con huevos fritos.', price: 97000 },
       { id: 35, name: 'Pechuga a la Putanesca', description: 'Pechuga de pollo al horno terminada en salsa putanesca acompañada de penne rigate a la crema.', price: 92000 },
       { id: 36, name: 'Lomo Saltado', description: 'Cubos de lomito, cebolla morada, champiñones, tomate cherry, cilantro, papas fritas y arroz al ajo.', price: 99000 },
-      { id: 37, name: 'Asado a la Olla', description: 'Costilla ventana sin hueso a la parrilla cocinada a la olla lentamente, acompañada de arroz kesú con arvejas.', price: 98000 },
+      { id: 37, name: 'Asado a la Olla', description: 'Costilla ventana sin hueso a la parrilla cocinada a la olla lentamente, acompañada de arroz kesú con arvejas.', price: 98000, image: asadoImg },
       { id: 38, name: 'Guisotto', description: 'Llevando este plato tradicional paraguayo a un nivel internacional con un arroz arbóreo para lograr una cremosidad única a través de la técnica italiana para elaborar risotto.', price: 82000 },
       { id: 39, name: 'Salmón al Limón', description: 'Salmón grillado con un colchón de crema de limón y vegetales orientales, masa philo.', price: 120000 },
       { id: 40, name: 'Vorí de Pollo', description: 'La mejor sopa del mundo. Sin más que explicar.', price: 65000 },
@@ -93,6 +122,7 @@ export const categories = [
   {
     id: 'pastas',
     label: 'Pastas',
+    image: pastasBannerImg,
     items: [
       { id: 41, name: 'Spaghetti Carbonara con Camarones', description: 'Clásica preparación de la cocina italiana de familia combinada con camarones al ajillo.', price: 97000 },
       { id: 42, name: 'Sorrentinos del Cocinero', description: 'Rellenos de ricota, jamón crudo y puerro en una cremosa salsa con un toque de ajo, almendras tostadas y limón.', price: 88000 },
@@ -106,7 +136,7 @@ export const categories = [
     image: milaImg,
     items: [
       { id: 45, name: 'Mila de Carne', description: 'Sale con guarnición de arroz kesú o ensalada.', price: 105000 },
-      { id: 46, name: 'Mila Napolitana', description: 'Milanesa de lomito, salsa roja, rodajas de tomate, queso fresco y orégano, sobre cama de crocantes papas fritas.', price: 118000 },
+      { id: 46, name: 'Mila Napolitana', description: 'Milanesa de lomito, salsa roja, rodajas de tomate, queso fresco y orégano, sobre cama de crocantes papas fritas.', price: 118000, image: milaNapolitanaImg },
       { id: 47, name: 'Mila de Surubí', description: 'Milanesa de surubí, salsa de queso Paraguay y roquefort.', price: 130000 },
       { id: 48, name: 'Mila de Pollo', description: 'Sale con guarnición de arroz kesú o ensalada.', price: 99000 },
       { id: 49, name: 'Marinera a Caballo', description: 'Marinera de lomito con 2 huevos y cebolla caramelizada, sobre cama de crocantes papas fritas.', price: 115000, image: marineraImg },
@@ -115,6 +145,7 @@ export const categories = [
   {
     id: 'postres',
     label: 'Postres & Tortas',
+    image: postresBannerImg,
     subcategories: [
       {
         label: 'Postres',
@@ -131,7 +162,7 @@ export const categories = [
       {
         label: 'Tortas',
         items: [
-          { id: 57, name: 'Cheesecake de Frutos Rojos', description: '', price: 45000 },
+          { id: 57, name: 'Cheesecake de Frutos Rojos', description: '', price: 45000, image: cheesecakeImg },
           { id: 58, name: 'Pie de Limón', description: '', price: 44000 },
           { id: 59, name: 'De Chocolate', description: '', price: 44000 },
           { id: 60, name: 'Red Velvet', description: '', price: 42000 },

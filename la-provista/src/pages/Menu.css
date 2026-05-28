@@ -109,6 +109,65 @@
   transform: translateY(-7%);
 }
 
+.menu-cat-image-wrap[data-cat="postres"] {
+  height: 420px;
+}
+
+.menu-cat-image-wrap[data-cat="piqueos"] .menu-cat-image {
+  transform: translateY(-15%);
+}
+
+.menu-cat-image-wrap[data-cat="burgers"] {
+  background: transparent;
+}
+
+.menu-cat-image-wrap[data-cat="tostones"] {
+  background: transparent;
+}
+
+.menu-cat-image-wrap[data-cat="tostones"] .menu-cat-image {
+  width: 75%;
+  margin: 0 auto;
+  transform: translateY(-12%);
+}
+
+.menu-cat-image-wrap[data-cat="pastas"] {
+  background: transparent;
+}
+
+.menu-cat-image-wrap[data-cat="pastas"] .menu-cat-image {
+  width: 90%;
+  margin: 0 auto;
+  transform: translateY(-12%);
+}
+
+.menu-cat-image-wrap[data-cat="principales"] {
+  background: transparent;
+}
+
+.menu-cat-image-wrap[data-cat="principales"] .menu-cat-image {
+  width: 55%;
+  margin: 0 auto;
+  transform: translateY(-22%);
+}
+
+.menu-cat-image-wrap[data-cat="burgers"] .menu-cat-image {
+  width: 55%;
+  margin: 0 auto;
+  transform: translateY(-30%);
+}
+
+.menu-cat-image-wrap[data-cat="empanadas"] {
+  height: 220px;
+  background: transparent;
+}
+
+.menu-cat-image-wrap[data-cat="empanadas"] .menu-cat-image {
+  width: 55%;
+  margin: 0 auto;
+  transform: none;
+}
+
 .menu-cat-note {
   font-size: 0.8rem;
   color: var(--gray-dark);
