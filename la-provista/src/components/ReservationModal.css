@@ -1,0 +1,251 @@
+/* ── Overlay ──────────────────────────────────────────────── */
+.rm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.55);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+/* ── Dialog ───────────────────────────────────────────────── */
+.rm-dialog {
+  background: var(--white);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 2.5rem 2rem 2rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+}
+
+.rm-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--gray-dark);
+  padding: 0.35rem 0.6rem;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.rm-close:hover {
+  color: var(--black);
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.rm-header {
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.rm-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+
+.rm-header h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.3rem;
+}
+
+.rm-capacity {
+  font-size: 0.82rem;
+  color: var(--gray-dark);
+}
+
+/* ── Form ─────────────────────────────────────────────────── */
+.rm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.rm-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.rm-row:has(.rm-field--short) {
+  grid-template-columns: 1fr 1fr 100px;
+}
+
+.rm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.rm-field label {
+  font-size: 0.72rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gray-dark);
+  font-weight: 500;
+}
+
+.rm-optional {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+  font-size: 0.7rem;
+  color: var(--gray-mid);
+}
+
+.rm-field input,
+.rm-field select,
+.rm-field textarea {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  background: var(--white);
+  border: 1px solid var(--gray-mid);
+  padding: 0.7rem 0.9rem;
+  color: var(--black);
+  outline: none;
+  transition: border-color 0.2s;
+  border-radius: 0;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.rm-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6560' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  padding-right: 2.2rem;
+  cursor: pointer;
+}
+
+.rm-field textarea {
+  resize: none;
+}
+
+.rm-field input:focus,
+.rm-field select:focus,
+.rm-field textarea:focus {
+  border-color: var(--accent);
+}
+
+.rm-input--err {
+  border-color: #c0392b !important;
+}
+
+.rm-error {
+  font-size: 0.72rem;
+  color: #c0392b;
+}
+
+/* ── WhatsApp button ──────────────────────────────────────── */
+.rm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.9rem 2rem;
+  font-size: 0.8rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, opacity 0.2s;
+}
+
+.rm-btn--whatsapp {
+  background: #25d366;
+  color: #fff;
+  align-self: flex-start;
+}
+
+.rm-btn--whatsapp:hover {
+  background: #1ebe5d;
+  transform: translateY(-1px);
+}
+
+.rm-btn--outline {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.rm-btn--outline:hover {
+  background: var(--accent);
+  color: var(--white);
+}
+
+.rm-btn--ghost {
+  background: transparent;
+  border: 1px solid var(--gray-mid);
+  color: var(--gray-dark);
+  font-size: 0.75rem;
+}
+
+.rm-btn--ghost:hover {
+  border-color: var(--gray-dark);
+  color: var(--black);
+}
+
+/* ── Success state ────────────────────────────────────────── */
+.rm-success {
+  text-align: center;
+  padding: 1rem 0 0.5rem;
+}
+
+.rm-success__icon {
+  display: block;
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.rm-success h3 {
+  font-size: 1.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.rm-success p {
+  font-size: 0.9rem;
+  color: var(--gray-dark);
+  line-height: 1.7;
+  max-width: 340px;
+  margin: 0 auto 1.75rem;
+}
+
+.rm-success__actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 540px) {
+  .rm-dialog {
+    padding: 2rem 1.25rem 1.5rem;
+  }
+
+  .rm-row {
+    grid-template-columns: 1fr;
+  }
+
+  .rm-row:has(.rm-field--short) {
+    grid-template-columns: 1fr;
+  }
+
+  .rm-btn--whatsapp {
+    align-self: stretch;
+  }
+}

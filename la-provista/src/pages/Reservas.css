@@ -29,9 +29,9 @@
 }
 
 .reservas-body {
-  max-width: 760px;
+  max-width: 620px;
   margin: 0 auto;
-  padding: 5rem 3rem;
+  padding: 4rem 2rem 5rem;
 }
 
 @media (max-width: 768px) {
