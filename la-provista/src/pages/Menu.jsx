@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { categories } from '../data/menu'
 import './Menu.css'
 
 function formatPrice(price) {
@@ -30,10 +29,25 @@ function MenuCard({ item, onClick, hideHint }) {
 }
 
 export default function Menu() {
-  const [active, setActive] = useState(categories[0].id)
+  const [categories, setCategories] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [active, setActive] = useState(null)
   const [selected, setSelected] = useState(null)
 
-  const current = categories.find(c => c.id === active)
+  useEffect(() => {
+    fetch('/api/menu')
+      .then(r => r.json())
+      .then(data => {
+        setCategories(data.categories)
+        setActive(data.categories[0]?.id)
+        setLoading(false)
+      })
+      .catch(() => {
+        setError('No se pudo cargar el menú.')
+        setLoading(false)
+      })
+  }, [])
 
   useEffect(() => {
     if (!selected) return
@@ -41,6 +55,28 @@ export default function Menu() {
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [selected])
+
+  if (loading) return (
+    <main className="menu-page">
+      <div className="menu-header">
+        <p className="menu-eyebrow">La Provista · Est. 2020</p>
+        <h1>Nuestra Carta</h1>
+      </div>
+      <div className="menu-loading">Cargando carta...</div>
+    </main>
+  )
+
+  if (error) return (
+    <main className="menu-page">
+      <div className="menu-header">
+        <p className="menu-eyebrow">La Provista · Est. 2020</p>
+        <h1>Nuestra Carta</h1>
+      </div>
+      <div className="menu-loading">{error}</div>
+    </main>
+  )
+
+  const current = categories.find(c => c.id === active)
 
   return (
     <main className="menu-page">
@@ -65,33 +101,30 @@ export default function Menu() {
         </aside>
 
         {/* Platos */}
-        <section className="menu-items">
-          {current.image && (
-            <div className="menu-cat-image-wrap" data-cat={current.id}>
-              <img src={current.image} alt={current.label} className="menu-cat-image" />
-            </div>
-          )}
-          <h2 className="menu-cat-title">{current.label}</h2>
-          {current.note && <p className="menu-cat-note">{current.note}</p>}
-          {current.subcategories ? (
-            current.subcategories.map(sub => (
-              <div key={sub.label} className="menu-subcategory">
-                <h3 className="menu-sub-title">{sub.label}</h3>
-                <div className="menu-grid">
-                  {sub.items.map(item => (
-                    <MenuCard key={item.id} item={item} onClick={setSelected} />
-                  ))}
+        {current && (
+          <section className="menu-items">
+            <h2 className="menu-cat-title">{current.label}</h2>
+            {current.note && <p className="menu-cat-note">{current.note}</p>}
+            {current.subcategories ? (
+              current.subcategories.map(sub => (
+                <div key={sub.label} className="menu-subcategory">
+                  <h3 className="menu-sub-title">{sub.label}</h3>
+                  <div className="menu-grid">
+                    {sub.items.map(item => (
+                      <MenuCard key={item.id} item={item} onClick={setSelected} />
+                    ))}
+                  </div>
                 </div>
+              ))
+            ) : (
+              <div className="menu-grid">
+                {current.items.map(item => (
+                  <MenuCard key={item.id} item={item} onClick={setSelected} hideHint={current.id === 'Empanadas'} />
+                ))}
               </div>
-            ))
-          ) : (
-            <div className="menu-grid">
-              {current.items.map(item => (
-                <MenuCard key={item.id} item={item} onClick={setSelected} hideHint={current.id === 'empanadas'} />
-              ))}
-            </div>
-          )}
-        </section>
+            )}
+          </section>
+        )}
       </div>
 
       {/* Tab bar móvil */}
