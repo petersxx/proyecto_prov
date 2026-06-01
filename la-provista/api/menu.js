@@ -37,6 +37,7 @@ function getProp(page, name) {
     case 'number':    return prop.number
     case 'select':    return prop.select?.name || null
     case 'checkbox':  return prop.checkbox
+    case 'url':       return prop.url || null
     default:          return null
   }
 }
@@ -61,6 +62,7 @@ export default async function handler(req, res) {
       const descripcion = getProp(page, 'Descripcion')
       const precio      = getProp(page, 'Precio')
       const precioRaya  = getProp(page, 'PrecioRaya')
+      const foto        = getProp(page, 'Foto')
 
       if (!nombre || !categoria) continue
 
@@ -75,6 +77,7 @@ export default async function handler(req, res) {
         description: descripcion || '',
         price: precio,
         priceRaya: precioRaya || undefined,
+        image: foto || undefined,
         subcategoria: subcategoria || undefined,
       })
     }
