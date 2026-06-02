@@ -43,7 +43,8 @@
 
 /* ── Table base styles ───────────────────────────────────── */
 .tm-table rect,
-.tm-table circle {
+.tm-table circle,
+.tm-table ellipse {
   stroke-width: 1.5;
   transition: fill 0.15s, stroke 0.15s;
 }
@@ -69,7 +70,8 @@
 
 /* ── Available tables ────────────────────────────────────── */
 .tm-table--avail rect,
-.tm-table--avail circle {
+.tm-table--avail circle,
+.tm-table--avail ellipse {
   fill: #fff;
   stroke: var(--accent);
 }
@@ -87,13 +89,15 @@
 }
 
 .tm-table--avail:hover rect,
-.tm-table--avail:hover circle {
+.tm-table--avail:hover circle,
+.tm-table--avail:hover ellipse {
   fill: var(--accent-light);
   stroke: var(--accent);
 }
 
 .tm-table--avail:active rect,
-.tm-table--avail:active circle {
+.tm-table--avail:active circle,
+.tm-table--avail:active ellipse {
   fill: var(--accent);
 }
 
@@ -104,7 +108,8 @@
 
 /* ── Non-reservable tables (vereda) ─────────────────────── */
 .tm-table--nobook rect,
-.tm-table--nobook circle {
+.tm-table--nobook circle,
+.tm-table--nobook ellipse {
   fill: #e8e8e8;
   stroke: #b8b4ae;
 }
