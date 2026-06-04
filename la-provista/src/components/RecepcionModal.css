@@ -1,0 +1,163 @@
+.rcm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.rcm-dialog {
+  background: #fff;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+  position: relative;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+}
+
+.rcm-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.rcm-close:hover { background: #e5e7eb; }
+
+.rcm-header {
+  margin-bottom: 20px;
+}
+
+.rcm-header h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 4px;
+}
+
+.rcm-sub {
+  font-size: 0.85rem;
+  color: #9c7c3c;
+  margin: 0;
+  font-weight: 500;
+}
+
+.rcm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.rcm-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.rcm-field--short { max-width: 100px; }
+
+@media (max-width: 480px) {
+  .rcm-row { grid-template-columns: 1fr; }
+  .rcm-field--short { max-width: 100%; }
+}
+
+.rcm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.rcm-field label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.rcm-optional {
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+.rcm-field input,
+.rcm-field select,
+.rcm-field textarea {
+  padding: 9px 12px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline: none;
+  background: #fff;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+
+.rcm-field input:focus,
+.rcm-field select:focus,
+.rcm-field textarea:focus {
+  border-color: #9c7c3c;
+}
+
+.rcm-field textarea { resize: vertical; min-height: 60px; }
+
+.rcm-err { border-color: #ef4444 !important; }
+
+.rcm-error {
+  font-size: 0.75rem;
+  color: #ef4444;
+}
+
+.rcm-notice {
+  font-size: 0.75rem;
+  color: #92400e;
+  background: #fef9ec;
+  border: 1px solid #f59e0b;
+  border-radius: 6px;
+  padding: 5px 10px;
+  display: block;
+}
+
+.rcm-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.rcm-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s;
+}
+
+.rcm-btn--cancel {
+  background: #f3f4f6;
+  color: #374151;
+}
+.rcm-btn--cancel:hover { background: #e5e7eb; }
+
+.rcm-btn--save {
+  background: #9c7c3c;
+  color: #fff;
+}
+.rcm-btn--save:hover   { background: #7a6030; }
+.rcm-btn--save:disabled { opacity: 0.6; cursor: default; }

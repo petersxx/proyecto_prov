@@ -3,6 +3,7 @@ import { readFileSync } from 'fs'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import handler from './api/menu.js'
+import reservasHandler from './api/reservas.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -34,6 +35,8 @@ createServer(async (req, res) => {
   wrapRes(res)
   if (req.url === '/api/menu') {
     await handler(req, res)
+  } else if (req.url.startsWith('/api/reservas')) {
+    await reservasHandler(req, res)
   } else {
     res.statusCode = 404
     res.end('Not found')

@@ -1,0 +1,87 @@
+.tma-wrapper {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.tma-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  font-family: inherit;
+}
+
+.tma-table { cursor: default; }
+
+.tma-table--clickable {
+  cursor: pointer;
+}
+
+.tma-table--clickable rect,
+.tma-table--clickable circle,
+.tma-table--clickable ellipse {
+  fill: #e8e0d0;
+  stroke: #b8a87a;
+  stroke-width: 1.5;
+  transition: fill 0.15s;
+}
+
+.tma-table--clickable:hover rect,
+.tma-table--clickable:hover circle,
+.tma-table--clickable:hover ellipse {
+  fill: #d4c090;
+}
+
+.tma-table--pendiente rect,
+.tma-table--pendiente circle,
+.tma-table--pendiente ellipse {
+  stroke: #d97706;
+  stroke-width: 2;
+}
+
+.tma-table--confirmada rect,
+.tma-table--confirmada circle,
+.tma-table--confirmada ellipse {
+  stroke: #2563eb;
+  stroke-width: 2;
+}
+
+.tma-table--ocupada rect,
+.tma-table--ocupada circle,
+.tma-table--ocupada ellipse {
+  stroke: #dc2626;
+  stroke-width: 2;
+}
+
+.tma-table--nobook rect,
+.tma-table--nobook circle,
+.tma-table--nobook ellipse {
+  fill: #d1d5db;
+  stroke: #9ca3af;
+  stroke-width: 1;
+}
+
+.tma-num {
+  font-size: 10px;
+  font-weight: 700;
+  fill: #3d2b0e;
+  pointer-events: none;
+}
+
+.tma-num--lg {
+  font-size: 13px;
+}
+
+.tma-cap {
+  font-size: 8px;
+  fill: #6b5c3e;
+  pointer-events: none;
+}
+
+.tma-section {
+  font-size: 11px;
+  font-weight: 600;
+  fill: #9c7c3c;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}

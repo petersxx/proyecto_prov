@@ -147,6 +147,24 @@
   color: #c0392b;
 }
 
+.rm-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: #fef9ec;
+  border: 1.5px solid #f59e0b;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  color: #78350f;
+  line-height: 1.4;
+}
+
+.rm-notice__icon {
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
 /* ── WhatsApp button ──────────────────────────────────────── */
 .rm-btn {
   display: inline-flex;
@@ -164,15 +182,27 @@
   transition: background 0.2s, transform 0.15s, opacity 0.2s;
 }
 
-.rm-btn--whatsapp {
-  background: #25d366;
+.rm-btn--primary {
+  background: #9c7c3c;
   color: #fff;
   align-self: flex-start;
 }
 
-.rm-btn--whatsapp:hover {
-  background: #1ebe5d;
+.rm-btn--primary:hover {
+  background: #7a6030;
   transform: translateY(-1px);
+}
+
+.rm-btn--primary:disabled {
+  opacity: 0.6;
+  cursor: default;
+  transform: none;
+}
+
+.rm-submit-error {
+  color: #dc2626;
+  font-size: 0.8rem;
+  margin: 0;
 }
 
 .rm-btn--outline {
