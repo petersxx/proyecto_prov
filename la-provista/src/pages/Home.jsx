@@ -56,7 +56,7 @@ export default function Home() {
             <button className="btn-primary btn-primary--borderless" onClick={scrollToMenu}>
               <span key={menuLabelIndex} className="btn-label-slide">{MENU_LABELS[menuLabelIndex]}</span>
             </button>
-            <Link to="/reservas" className="btn-outline-white">
+            <Link to="/reservas" className="btn-outline-white btn-outline-white--borderless">
               <span key={`r-${menuLabelIndex}`} className="btn-label-slide">{RESERVAS_LABELS[menuLabelIndex]}</span>
             </Link>
           </div>
