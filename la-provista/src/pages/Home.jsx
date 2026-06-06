@@ -7,6 +7,8 @@ import hero4 from '../assets/hero-4.jpg'
 import hero5 from '../assets/hero-5.jpg'
 import InstagramCarousel from '../components/InstagramCarousel'
 import Menu from './Menu'
+import About from './About'
+import Contact from './Contact'
 import SudamerisPromo from '../components/SudamerisPromo'
 import './Home.css'
 
@@ -92,6 +94,14 @@ export default function Home() {
       </div>
 
       <InstagramCarousel />
+
+      <div id="nosotros">
+        <About embedded />
+      </div>
+
+      <div id="contacto">
+        <Contact embedded />
+      </div>
     </main>
   )
 }

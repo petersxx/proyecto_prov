@@ -3,6 +3,11 @@
   padding-top: 80px;
 }
 
+.contact-page--embedded {
+  min-height: unset;
+  padding-top: 0;
+}
+
 .contact-header {
   background: var(--black);
   color: var(--white);

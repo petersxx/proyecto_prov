@@ -2,9 +2,11 @@ import terrazaNoche from '../assets/terraza-noche.png'
 import terrazaDia from '../assets/terraza-dia.png'
 import './About.css'
 
-export default function About() {
+export default function About({ embedded = false }) {
+  const Tag = embedded ? 'div' : 'main'
+  const cls = `about-page${embedded ? ' about-page--embedded' : ''}`
   return (
-    <main className="about-page">
+    <Tag className={cls}>
       <div className="about-header">
         <p className="about-eyebrow">Nuestra historia</p>
         <h1>La Provista</h1>
@@ -48,6 +50,6 @@ export default function About() {
           <img src={terrazaDia} alt="La Provista de día" />
         </div>
       </div>
-    </main>
+    </Tag>
   )
 }

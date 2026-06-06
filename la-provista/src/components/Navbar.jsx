@@ -14,14 +14,16 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  function handleMenuClick(e) {
-    e.preventDefault()
-    setMenuOpen(false)
-    if (location.pathname === '/') {
-      document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth' })
-    } else {
-      navigate('/')
-      setTimeout(() => document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth' }), 150)
+  function handleScrollTo(id) {
+    return function(e) {
+      e.preventDefault()
+      setMenuOpen(false)
+      if (location.pathname === '/') {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+      } else {
+        navigate('/')
+        setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 150)
+      }
     }
   }
 
@@ -41,9 +43,9 @@ export default function Navbar() {
 
       <ul className={`navbar-links ${menuOpen ? 'open' : ''}`}>
         <li><NavLink to="/" onClick={() => setMenuOpen(false)}>Inicio</NavLink></li>
-        <li><a href="/#menu" onClick={handleMenuClick}>Menú</a></li>
-        <li><NavLink to="/nosotros" onClick={() => setMenuOpen(false)}>Nosotros</NavLink></li>
-        <li><NavLink to="/contacto" onClick={() => setMenuOpen(false)}>Contacto</NavLink></li>
+        <li><a href="/#menu" onClick={handleScrollTo('menu')}>Menú</a></li>
+        <li><a href="/#nosotros" onClick={handleScrollTo('nosotros')}>Nosotros</a></li>
+        <li><a href="/#contacto" onClick={handleScrollTo('contacto')}>Contacto</a></li>
         <li>
           <NavLink to="/reservas" onClick={() => setMenuOpen(false)} className="navbar-reservar">
             Reservar

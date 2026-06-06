@@ -163,6 +163,19 @@ export default function Menu({ embedded = false }) {
         <p className="menu-desc">{t.desc}</p>
       </div>
 
+      {/* Tab bar móvil — encima del contenido */}
+      <div className="menu-tabs-mobile">
+        {categories.map(cat => (
+          <button
+            key={cat.id}
+            className={`menu-tab-mobile ${active === cat.id ? 'active' : ''}`}
+            onClick={() => setActive(cat.id)}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
       <div className="menu-body">
         <aside className="menu-sidebar">
           {categories.map(cat => (
@@ -200,19 +213,6 @@ export default function Menu({ embedded = false }) {
             )}
           </section>
         )}
-      </div>
-
-      {/* Tab bar móvil */}
-      <div className="menu-tabs-mobile">
-        {categories.map(cat => (
-          <button
-            key={cat.id}
-            className={`menu-tab-mobile ${active === cat.id ? 'active' : ''}`}
-            onClick={() => setActive(cat.id)}
-          >
-            {cat.label}
-          </button>
-        ))}
       </div>
 
       {/* Modal — rendered at root level para evitar clipping */}

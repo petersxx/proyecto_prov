@@ -3,6 +3,11 @@
   padding-top: 80px;
 }
 
+.about-page--embedded {
+  min-height: unset;
+  padding-top: 0;
+}
+
 .about-header {
   background: var(--accent-light);
   text-align: center;

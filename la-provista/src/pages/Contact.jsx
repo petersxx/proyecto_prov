@@ -1,8 +1,10 @@
 import './Contact.css'
 
-export default function Contact() {
+export default function Contact({ embedded = false }) {
+  const Tag = embedded ? 'div' : 'main'
+  const cls = `contact-page${embedded ? ' contact-page--embedded' : ''}`
   return (
-    <main className="contact-page">
+    <Tag className={cls}>
       <div className="contact-header">
         <p className="contact-eyebrow">Encontranos</p>
         <h1>Contacto</h1>
@@ -56,6 +58,6 @@ export default function Contact() {
           />
         </div>
       </div>
-    </main>
+    </Tag>
   )
 }
