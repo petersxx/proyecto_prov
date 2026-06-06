@@ -1,23 +1,38 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import fachada from '../assets/fachada.png'
 import hero1 from '../assets/hero-1.jpg'
 import hero2 from '../assets/hero-2.jpg'
 import hero3 from '../assets/hero-3.jpg'
 import hero4 from '../assets/hero-4.jpg'
 import hero5 from '../assets/hero-5.jpg'
 import InstagramCarousel from '../components/InstagramCarousel'
+import Menu from './Menu'
+import SudamerisPromo from '../components/SudamerisPromo'
 import './Home.css'
 
+function scrollToMenu() {
+  document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth' })
+}
+
 const heroImages = [hero1, hero2, hero3, hero4, hero5]
+const MENU_LABELS     = ['Ver menú',  'View menu',      'Ver cardápio']
+const RESERVAS_LABELS = ['Reservas',  'Reservations',   'Reservas']
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [menuLabelIndex, setMenuLabelIndex] = useState(0)
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex(prev => (prev + 1) % heroImages.length)
     }, 5000)
+    return () => clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setMenuLabelIndex(prev => (prev + 1) % MENU_LABELS.length)
+    }, 3500)
     return () => clearInterval(timer)
   }, [])
 
@@ -38,8 +53,12 @@ export default function Home() {
           <h1>La Provista</h1>
           <p className="hero-sub">Sabores que te hacen volver</p>
           <div className="hero-actions">
-            <Link to="/menu" className="btn-primary">Ver menú</Link>
-            <Link to="/reservas" className="btn-outline-white">Reservas</Link>
+            <button className="btn-primary btn-primary--borderless" onClick={scrollToMenu}>
+              <span key={menuLabelIndex} className="btn-label-slide">{MENU_LABELS[menuLabelIndex]}</span>
+            </button>
+            <Link to="/reservas" className="btn-outline-white">
+              <span key={`r-${menuLabelIndex}`} className="btn-label-slide">{RESERVAS_LABELS[menuLabelIndex]}</span>
+            </Link>
           </div>
         </div>
       </section>
@@ -65,16 +84,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Menú */}
-      <section className="cta-menu">
-        <div className="cta-menu-text">
-          <h2>Descubrí nuestra carta</h2>
-          <p>Explorá nuestros platos, desde entradas hasta postres, con precios claros y detalle de cada preparación.</p>
-          <Link to="/menu" className="btn-outline">Ver menú completo</Link>
-        </div>
-      </section>
+      <SudamerisPromo />
 
-<InstagramCarousel />
+      {/* Menú embebido */}
+      <div id="menu">
+        <Menu embedded />
+      </div>
+
+      <InstagramCarousel />
     </main>
   )
 }

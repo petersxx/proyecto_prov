@@ -1,18 +1,70 @@
 import { useState, useEffect } from 'react'
 import './Menu.css'
 
+const TRANSLATIONS = {
+  es: {
+    eyebrow:   'La Provista · Est. 2020',
+    title:     'Nuestra Carta',
+    desc:      'Todos nuestros platos están preparados con ingredientes frescos del día.',
+    loading:   'Cargando carta...',
+    error:     'No se pudo cargar el menú.',
+    hint:      'Toca para ver más',
+    consult:   'Consultar',
+    bottle:    'Botella',
+    raya:      'Raya',
+  },
+  en: {
+    eyebrow:   'La Provista · Est. 2020',
+    title:     'Our Menu',
+    desc:      'All our dishes are prepared with fresh ingredients every day.',
+    loading:   'Loading menu...',
+    error:     'Could not load the menu.',
+    hint:      'Tap for details',
+    consult:   'Ask us',
+    bottle:    'Bottle',
+    raya:      'Glass',
+  },
+  pt: {
+    eyebrow:   'La Provista · Est. 2020',
+    title:     'Nosso Cardápio',
+    desc:      'Todos os nossos pratos são preparados com ingredientes frescos do dia.',
+    loading:   'Carregando cardápio...',
+    error:     'Não foi possível carregar o cardápio.',
+    hint:      'Toque para ver mais',
+    consult:   'Consultar',
+    bottle:    'Garrafa',
+    raya:      'Dose',
+  },
+}
+
+const LANG_LABELS = { es: 'ES', en: 'EN', pt: 'PT' }
+
 function formatPrice(price) {
   if (!price) return null
   return `₲ ${price.toLocaleString('es-PY')}`
 }
 
-function MenuCard({ item, onClick, hideHint }) {
+function localName(item, lang) {
+  if (lang === 'en') return item.name_en || item.name
+  if (lang === 'pt') return item.name_pt || item.name
+  return item.name
+}
+
+function localDesc(item, lang) {
+  if (lang === 'en') return item.desc_en || item.description
+  if (lang === 'pt') return item.desc_pt || item.description
+  return item.description
+}
+
+function MenuCard({ item, onClick, hideHint, t, lang }) {
+  const name = localName(item, lang)
+  const desc = localDesc(item, lang)
   return (
     <div className="menu-card" onClick={() => onClick(item)}>
       <div className="menu-card-info">
-        <h3>{item.name}</h3>
-        {item.description && <p>{item.description}</p>}
-        {!hideHint && <span className="menu-card-hint">Haz clic para ver más</span>}
+        <h3>{name}</h3>
+        {desc && <p>{desc}</p>}
+        {!hideHint && <span className="menu-card-hint">{t.hint}</span>}
       </div>
       {item.priceRaya ? (
         <span className="menu-card-price dual">
@@ -22,18 +74,40 @@ function MenuCard({ item, onClick, hideHint }) {
       ) : formatPrice(item.price) ? (
         <span className="menu-card-price">{formatPrice(item.price)}</span>
       ) : (
-        <span className="menu-card-price consult">Consultar</span>
+        <span className="menu-card-price consult">{t.consult}</span>
       )}
     </div>
   )
 }
 
-export default function Menu() {
+function LangSwitch({ lang, setLang }) {
+  return (
+    <div className="menu-lang-switch">
+      {Object.entries(LANG_LABELS).map(([code, label]) => (
+        <button
+          key={code}
+          className={`menu-lang-btn ${lang === code ? 'active' : ''}`}
+          onClick={() => setLang(code)}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+export default function Menu({ embedded = false }) {
+  const Tag = embedded ? 'div' : 'main'
+  const cls = `menu-page${embedded ? ' menu-page--embedded' : ''}`
+
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [active, setActive] = useState(null)
   const [selected, setSelected] = useState(null)
+  const [lang, setLang] = useState('es')
+
+  const t = TRANSLATIONS[lang]
 
   useEffect(() => {
     fetch('/api/menu')
@@ -44,7 +118,7 @@ export default function Menu() {
         setLoading(false)
       })
       .catch(() => {
-        setError('No se pudo cargar el menú.')
+        setError(true)
         setLoading(false)
       })
   }, [])
@@ -57,37 +131,39 @@ export default function Menu() {
   }, [selected])
 
   if (loading) return (
-    <main className="menu-page">
+    <Tag className={cls}>
       <div className="menu-header">
-        <p className="menu-eyebrow">La Provista · Est. 2020</p>
-        <h1>Nuestra Carta</h1>
+        <LangSwitch lang={lang} setLang={setLang} />
+        <p className="menu-eyebrow">{t.eyebrow}</p>
+        <h1>{t.title}</h1>
       </div>
-      <div className="menu-loading">Cargando carta...</div>
-    </main>
+      <div className="menu-loading">{t.loading}</div>
+    </Tag>
   )
 
   if (error) return (
-    <main className="menu-page">
+    <Tag className={cls}>
       <div className="menu-header">
-        <p className="menu-eyebrow">La Provista · Est. 2020</p>
-        <h1>Nuestra Carta</h1>
+        <LangSwitch lang={lang} setLang={setLang} />
+        <p className="menu-eyebrow">{t.eyebrow}</p>
+        <h1>{t.title}</h1>
       </div>
-      <div className="menu-loading">{error}</div>
-    </main>
+      <div className="menu-loading">{t.error}</div>
+    </Tag>
   )
 
   const current = categories.find(c => c.id === active)
 
   return (
-    <main className="menu-page">
+    <Tag className={cls}>
       <div className="menu-header">
-        <p className="menu-eyebrow">La Provista · Est. 2020</p>
-        <h1>Nuestra Carta</h1>
-        <p className="menu-desc">Todos nuestros platos están preparados con ingredientes frescos del día.</p>
+        <LangSwitch lang={lang} setLang={setLang} />
+        <p className="menu-eyebrow">{t.eyebrow}</p>
+        <h1>{t.title}</h1>
+        <p className="menu-desc">{t.desc}</p>
       </div>
 
       <div className="menu-body">
-        {/* Categorías sidebar (desktop) */}
         <aside className="menu-sidebar">
           {categories.map(cat => (
             <button
@@ -100,7 +176,6 @@ export default function Menu() {
           ))}
         </aside>
 
-        {/* Platos */}
         {current && (
           <section className="menu-items">
             <h2 className="menu-cat-title">{current.label}</h2>
@@ -111,7 +186,7 @@ export default function Menu() {
                   <h3 className="menu-sub-title">{sub.label}</h3>
                   <div className="menu-grid">
                     {sub.items.map(item => (
-                      <MenuCard key={item.id} item={item} onClick={setSelected} />
+                      <MenuCard key={item.id} item={item} onClick={setSelected} t={t} lang={lang} />
                     ))}
                   </div>
                 </div>
@@ -119,7 +194,7 @@ export default function Menu() {
             ) : (
               <div className="menu-grid">
                 {current.items.map(item => (
-                  <MenuCard key={item.id} item={item} onClick={setSelected} hideHint={current.id === 'Empanadas'} />
+                  <MenuCard key={item.id} item={item} onClick={setSelected} t={t} lang={lang} hideHint={current.id === 'Empanadas'} />
                 ))}
               </div>
             )}
@@ -140,7 +215,7 @@ export default function Menu() {
         ))}
       </div>
 
-      {/* Modal */}
+      {/* Modal — rendered at root level para evitar clipping */}
       {selected && (
         <div className="menu-modal-overlay" onClick={() => setSelected(null)}>
           <div className="menu-modal" onClick={e => e.stopPropagation()}>
@@ -151,12 +226,12 @@ export default function Menu() {
               </div>
             )}
             <div className={`menu-modal-body ${!selected.image ? 'no-img' : ''}`}>
-              <h3>{selected.name}</h3>
-              {selected.description && <p>{selected.description}</p>}
+              <h3>{localName(selected, lang)}</h3>
+              {localDesc(selected, lang) && <p>{localDesc(selected, lang)}</p>}
               {selected.priceRaya ? (
                 <div className="menu-modal-prices">
-                  <span>Botella {formatPrice(selected.price)}</span>
-                  <span>Raya {formatPrice(selected.priceRaya)}</span>
+                  <span>{t.bottle} {formatPrice(selected.price)}</span>
+                  <span>{t.raya} {formatPrice(selected.priceRaya)}</span>
                 </div>
               ) : formatPrice(selected.price) ? (
                 <span className="menu-modal-price">{formatPrice(selected.price)}</span>
@@ -165,6 +240,6 @@ export default function Menu() {
           </div>
         </div>
       )}
-    </main>
+    </Tag>
   )
 }

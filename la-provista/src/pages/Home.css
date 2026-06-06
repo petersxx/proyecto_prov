@@ -76,6 +76,12 @@
   flex-wrap: wrap;
 }
 
+.hero-actions a,
+.hero-actions button {
+  min-width: 170px;
+  text-align: center;
+}
+
 .btn-outline-white {
   display: inline-block;
   border: 1px solid rgba(255,255,255,0.7);
@@ -91,6 +97,35 @@
 .btn-outline-white:hover {
   background: rgba(255,255,255,0.15);
   border-color: var(--white);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(255,255,255,0.15);
+}
+
+.btn-primary, .btn-outline-white {
+  transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+
+.btn-primary--borderless {
+  border: none;
+  outline: none;
+}
+
+.btn-outline-white--borderless {
+  border-color: transparent;
+}
+.btn-outline-white--borderless:hover {
+  border-color: transparent;
+  background: rgba(255,255,255,0.15);
+}
+
+.btn-label-slide {
+  display: inline-block;
+  animation: label-fade 0.4s ease;
+}
+
+@keyframes label-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .btn-primary {
@@ -107,7 +142,8 @@
 
 .btn-primary:hover {
   background: #a07840;
-  transform: translateY(-1px);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(181, 135, 74, 0.45);
 }
 
 .btn-outline {

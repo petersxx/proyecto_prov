@@ -4,6 +4,8 @@ import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import handler from './api/menu.js'
 import reservasHandler from './api/reservas.js'
+import adminHandler from './api/admin.js'
+import uploadHandler from './api/upload.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -37,6 +39,10 @@ createServer(async (req, res) => {
     await handler(req, res)
   } else if (req.url.startsWith('/api/reservas')) {
     await reservasHandler(req, res)
+  } else if (req.url.startsWith('/api/admin')) {
+    await adminHandler(req, res)
+  } else if (req.url === '/api/upload') {
+    await uploadHandler(req, res)
   } else {
     res.statusCode = 404
     res.end('Not found')

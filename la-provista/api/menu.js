@@ -1,45 +1,7 @@
-const NOTION_VERSION = '2022-06-28'
+import { createClient } from '@supabase/supabase-js'
 
-function notionFetch(path, body) {
-  return fetch(`https://api.notion.com/v1${path}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${process.env.NOTION_API_KEY}`,
-      'Content-Type': 'application/json',
-      'Notion-Version': NOTION_VERSION,
-    },
-    body: JSON.stringify(body),
-  }).then(r => r.json())
-}
-
-async function getAllPages(databaseId) {
-  const pages = []
-  let cursor = undefined
-
-  do {
-    const body = { page_size: 100, sorts: [{ property: 'Orden', direction: 'ascending' }] }
-    if (cursor) body.start_cursor = cursor
-
-    const res = await notionFetch(`/databases/${databaseId}/query`, body)
-    pages.push(...res.results)
-    cursor = res.has_more ? res.next_cursor : undefined
-  } while (cursor)
-
-  return pages
-}
-
-function getProp(page, name) {
-  const prop = page.properties[name]
-  if (!prop) return null
-  switch (prop.type) {
-    case 'title':     return prop.title[0]?.plain_text || ''
-    case 'rich_text': return prop.rich_text[0]?.plain_text || ''
-    case 'number':    return prop.number
-    case 'select':    return prop.select?.name || null
-    case 'checkbox':  return prop.checkbox
-    case 'url':       return prop.url || null
-    default:          return null
-  }
+function getSupabase() {
+  return createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)
 }
 
 export default async function handler(req, res) {
@@ -47,42 +9,39 @@ export default async function handler(req, res) {
   res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300')
 
   try {
-    const dbId = process.env.NOTION_DATABASE_ID
-    const pages = await getAllPages(dbId)
+    const supabase = getSupabase()
+    const { data: rows, error } = await supabase
+      .from('menu_items')
+      .select('*')
+      .eq('activo', true)
+      .order('orden', { ascending: true })
+
+    if (error) throw error
 
     const itemsByCategory = {}
     const categoryOrder = []
 
-    for (const page of pages) {
-      if (!getProp(page, 'Activo')) continue
-
-      const nombre      = getProp(page, 'Nombre')
-      const categoria   = getProp(page, 'Categoria')
-      const subcategoria = getProp(page, 'Subcategoria')
-      const descripcion = getProp(page, 'Descripcion')
-      const precio      = getProp(page, 'Precio')
-      const precioRaya  = getProp(page, 'PrecioRaya')
-      const foto        = getProp(page, 'Foto')
-
-      if (!nombre || !categoria) continue
-
+    for (const row of rows) {
+      const categoria = row.categoria
       if (!itemsByCategory[categoria]) {
         itemsByCategory[categoria] = []
         categoryOrder.push(categoria)
       }
-
       itemsByCategory[categoria].push({
-        id: page.id,
-        name: nombre,
-        description: descripcion || '',
-        price: precio,
-        priceRaya: precioRaya || undefined,
-        image: foto || undefined,
-        subcategoria: subcategoria || undefined,
+        id:          row.id,
+        name:        row.nombre,
+        description: row.descripcion || '',
+        name_en:     row.nombre_en    || undefined,
+        desc_en:     row.descripcion_en || undefined,
+        name_pt:     row.nombre_pt    || undefined,
+        desc_pt:     row.descripcion_pt || undefined,
+        price:       row.precio,
+        priceRaya:   row.precio_raya  || undefined,
+        image:       row.foto         || undefined,
+        subcategoria: row.subcategoria || undefined,
       })
     }
 
-    // Agrupar subcategorías
     const categories = categoryOrder.map(catLabel => {
       const items = itemsByCategory[catLabel]
       const hasSubs = items.some(i => i.subcategoria)
