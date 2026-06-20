@@ -1,7 +1,34 @@
-import { createClient } from '@supabase/supabase-js'
+const NOTION_VERSION = '2022-06-28'
 
-function getSupabase() {
-  return createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)
+function notionHeaders() {
+  return {
+    Authorization: `Bearer ${process.env.NOTION_API_KEY}`,
+    'Notion-Version': NOTION_VERSION,
+    'Content-Type': 'application/json',
+  }
+}
+
+function getText(prop) {
+  return prop?.rich_text?.map(t => t.plain_text).join('') || ''
+}
+
+async function queryAll(database_id, filter, sorts) {
+  const results = []
+  let cursor = undefined
+  do {
+    const body = { filter, sorts, page_size: 100 }
+    if (cursor) body.start_cursor = cursor
+
+    const resp = await fetch(
+      `https://api.notion.com/v1/databases/${database_id}/query`,
+      { method: 'POST', headers: notionHeaders(), body: JSON.stringify(body) }
+    )
+    if (!resp.ok) throw new Error(`Notion API error: ${resp.status}`)
+    const data = await resp.json()
+    results.push(...data.results)
+    cursor = data.has_more ? data.next_cursor : undefined
+  } while (cursor)
+  return results
 }
 
 export default async function handler(req, res) {
@@ -9,37 +36,45 @@ export default async function handler(req, res) {
   res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300')
 
   try {
-    const supabase = getSupabase()
-    const { data: rows, error } = await supabase
-      .from('menu_items')
-      .select('*')
-      .eq('activo', true)
-      .order('orden', { ascending: true })
+    const pages = await queryAll(
+      process.env.NOTION_DATABASE_ID,
+      { property: 'Activo', checkbox: { equals: true } },
+      [{ property: 'Orden', direction: 'ascending' }]
+    )
 
-    if (error) throw error
+    const rows = pages.map(page => {
+      const p = page.properties
+      const nameEN = getText(p.Nombre_EN)
+      const descEN = getText(p.Descripcion_EN)
+      const namePT = getText(p.Nombre_PT)
+      const descPT = getText(p.Descripcion_PT)
+      return {
+        id:           page.id,
+        name:         p.Nombre?.title?.map(t => t.plain_text).join('') || '',
+        description:  getText(p.Descripcion),
+        name_en:      nameEN  || undefined,
+        desc_en:      descEN  || undefined,
+        name_pt:      namePT  || undefined,
+        desc_pt:      descPT  || undefined,
+        price:        p.Precio?.number    ?? null,
+        priceRaya:    p.PrecioRaya?.number ?? undefined,
+        image:        p.Foto?.url          ?? undefined,
+        categoria:    p.Categoria?.select?.name  || '',
+        subcategoria: p.Subcategoria?.select?.name || undefined,
+        orden:        p.Orden?.number ?? 0,
+      }
+    })
 
     const itemsByCategory = {}
     const categoryOrder = []
 
     for (const row of rows) {
-      const categoria = row.categoria
-      if (!itemsByCategory[categoria]) {
-        itemsByCategory[categoria] = []
-        categoryOrder.push(categoria)
+      if (!row.categoria) continue
+      if (!itemsByCategory[row.categoria]) {
+        itemsByCategory[row.categoria] = []
+        categoryOrder.push(row.categoria)
       }
-      itemsByCategory[categoria].push({
-        id:          row.id,
-        name:        row.nombre,
-        description: row.descripcion || '',
-        name_en:     row.nombre_en    || undefined,
-        desc_en:     row.descripcion_en || undefined,
-        name_pt:     row.nombre_pt    || undefined,
-        desc_pt:     row.descripcion_pt || undefined,
-        price:       row.precio,
-        priceRaya:   row.precio_raya  || undefined,
-        image:       row.foto         || undefined,
-        subcategoria: row.subcategoria || undefined,
-      })
+      itemsByCategory[row.categoria].push(row)
     }
 
     const categories = categoryOrder.map(catLabel => {
@@ -47,7 +82,11 @@ export default async function handler(req, res) {
       const hasSubs = items.some(i => i.subcategoria)
 
       if (!hasSubs) {
-        return { id: catLabel, label: catLabel, items: items.map(({ subcategoria, ...i }) => i) }
+        return {
+          id: catLabel,
+          label: catLabel,
+          items: items.map(({ categoria, subcategoria, orden, ...i }) => i),
+        }
       }
 
       const subMap = {}
@@ -55,7 +94,7 @@ export default async function handler(req, res) {
       for (const item of items) {
         const sub = item.subcategoria || 'General'
         if (!subMap[sub]) { subMap[sub] = []; subOrder.push(sub) }
-        const { subcategoria, ...rest } = item
+        const { categoria, subcategoria, orden, ...rest } = item
         subMap[sub].push(rest)
       }
 

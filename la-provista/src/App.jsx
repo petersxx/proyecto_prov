@@ -8,7 +8,6 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Reservas from './pages/Reservas'
 import Recepcion from './pages/Recepcion'
-import Admin from './pages/Admin'
 
 function App() {
   return (
@@ -22,7 +21,6 @@ function App() {
         <Route path="/contacto" element={<Contact />} />
         <Route path="/reservas" element={<Reservas />} />
         <Route path="/recepcion" element={<Recepcion />} />
-        <Route path="/admin" element={<Admin />} />
       </Routes>
       <Footer />
     </>
