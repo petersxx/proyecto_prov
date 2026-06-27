@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './ReservationForm.css'
 
+const WA_NUMBER = '595991230966'
+
 const TIME_SLOTS = [
   '12:00', '12:30', '13:00', '13:30', '14:00', '14:30',
   '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00',
@@ -8,11 +10,29 @@ const TIME_SLOTS = [
 
 const INITIAL = { name: '', phone: '', date: '', time: '', guests: '2', notes: '' }
 
+function formatDate(dateStr) {
+  if (!dateStr) return ''
+  const [y, m, d] = dateStr.split('-')
+  return `${d}/${m}/${y}`
+}
+
+function buildWhatsAppUrl(form) {
+  const lines = [
+    '🍽️ *Solicitud de reserva — La Provista*',
+    '',
+    `👤 *Nombre:* ${form.name}`,
+    `📞 *Teléfono:* ${form.phone}`,
+    `📅 *Fecha:* ${formatDate(form.date)}`,
+    `🕐 *Horario:* ${form.time}`,
+    `👥 *Personas:* ${form.guests}`,
+  ]
+  if (form.notes.trim()) lines.push(`📝 *Comentarios:* ${form.notes.trim()}`)
+  const text = encodeURIComponent(lines.join('\n'))
+  return `https://wa.me/${WA_NUMBER}?text=${text}`
+}
+
 export default function ReservationForm() {
   const [form, setForm] = useState(INITIAL)
-  const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [apiError, setApiError] = useState(false)
   const [errors, setErrors] = useState({})
 
   function validate() {
@@ -30,59 +50,14 @@ export default function ReservationForm() {
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }))
   }
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault()
     const e2 = validate()
     if (Object.keys(e2).length > 0) { setErrors(e2); return }
-    setLoading(true)
-    setApiError(false)
-    try {
-      const res = await fetch('/api/reservas', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nombre:   form.name,
-          telefono: form.phone,
-          fecha:    form.date,
-          hora:     form.time,
-          personas: Number(form.guests) || 1,
-          notas:    form.notes,
-        }),
-      })
-      if (!res.ok) throw new Error()
-      setSubmitted(true)
-    } catch {
-      setApiError(true)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  function handleReset() {
-    setForm(INITIAL)
-    setErrors({})
-    setSubmitted(false)
+    window.open(buildWhatsAppUrl(form), '_blank')
   }
 
   const today = new Date().toISOString().split('T')[0]
-
-  if (submitted) {
-    return (
-      <div className="reservation-success">
-        <span className="reservation-success__icon">✦</span>
-        <h3>¡Reserva recibida!</h3>
-        <p>
-          Gracias, <strong>{form.name}</strong>. Te contactaremos al{' '}
-          <strong>{form.phone}</strong> para confirmar tu mesa para{' '}
-          <strong>{form.guests} persona{form.guests !== '1' ? 's' : ''}</strong> el{' '}
-          <strong>{form.date}</strong> a las <strong>{form.time}</strong>.
-        </p>
-        <button className="reservation-success__btn" onClick={handleReset}>
-          Hacer otra reserva
-        </button>
-      </div>
-    )
-  }
 
   return (
     <form className="reservation-form" onSubmit={handleSubmit} noValidate>
@@ -175,13 +150,8 @@ export default function ReservationForm() {
         />
       </div>
 
-      {apiError && (
-        <p className="rf-error rf-error--api">
-          Hubo un error al enviar la reserva. Intentá de nuevo o llamanos directamente.
-        </p>
-      )}
-      <button type="submit" className="rf-submit" disabled={loading}>
-        {loading ? 'Enviando…' : 'Solicitar reserva'}
+      <button type="submit" className="rf-submit">
+        Reservar por WhatsApp
       </button>
     </form>
   )
