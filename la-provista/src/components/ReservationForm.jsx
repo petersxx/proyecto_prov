@@ -11,6 +11,8 @@ const INITIAL = { name: '', phone: '', date: '', time: '', guests: '2', notes: '
 export default function ReservationForm() {
   const [form, setForm] = useState(INITIAL)
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [apiError, setApiError] = useState(false)
   const [errors, setErrors] = useState({})
 
   function validate() {
@@ -28,11 +30,32 @@ export default function ReservationForm() {
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }))
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     const e2 = validate()
     if (Object.keys(e2).length > 0) { setErrors(e2); return }
-    setSubmitted(true)
+    setLoading(true)
+    setApiError(false)
+    try {
+      const res = await fetch('/api/reservas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre:   form.name,
+          telefono: form.phone,
+          fecha:    form.date,
+          hora:     form.time,
+          personas: Number(form.guests) || 1,
+          notas:    form.notes,
+        }),
+      })
+      if (!res.ok) throw new Error()
+      setSubmitted(true)
+    } catch {
+      setApiError(true)
+    } finally {
+      setLoading(false)
+    }
   }
 
   function handleReset() {
@@ -152,7 +175,14 @@ export default function ReservationForm() {
         />
       </div>
 
-      <button type="submit" className="rf-submit">Solicitar reserva</button>
+      {apiError && (
+        <p className="rf-error rf-error--api">
+          Hubo un error al enviar la reserva. Intentá de nuevo o llamanos directamente.
+        </p>
+      )}
+      <button type="submit" className="rf-submit" disabled={loading}>
+        {loading ? 'Enviando…' : 'Solicitar reserva'}
+      </button>
     </form>
   )
 }
